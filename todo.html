@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List App</title>
+    <style>
+        /*add the css to the main body*/
+    body {
+        margin: 0;
+        overflow: hidden;
+        background: linear-gradient(to right, #b8da4b, #e630a0); /* Replace with your desired colors */
+        font-family: Arial, sans-serif;
+    }
+    h1{
+        color:rgb(235, 233, 243);
+    }
+    
+    .container {
+        text-align: center;
+        margin-top: 50px;
+        padding: 20px;
+
+    
+    }
+    /*show the css property of input*/
+    input {
+        font-size: 20px;
+        padding: 8px;
+        width: 600px;
+        border-radius: 8px;
+        
+    
+    }
+    /*css for add done delete button*/
+    button {
+        position: fixed;
+        padding: 8px;
+        margin-left:550px;
+        cursor: pointer;
+        border-radius: 8px;
+        background-color: rgb(58, 225, 58);
+    }
+    button1 {
+        padding: 8px;
+        cursor: pointer;
+        border-radius: 8px;
+        background-color: rgb(55, 236, 191);
+    }
+    button2 {
+        padding:8px;
+        cursor: pointer;
+        margin-left: 10px;
+        border-radius: 8px;
+       background-color: rgb(233, 13, 13);
+    }
+    
+    ul {
+        list-style-type: none;
+        padding: 50px;
+        width: 800px;
+        text-align: center;
+        margin-left: 500px;
+        
+    }
+    
+    li {
+        width: 700px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #f6e9e9;
+        padding: 4px;
+        margin: 4px 0;
+        border-radius: 8px;
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+        
+    }
+    
+    .done {
+        text-decoration: line-through;
+        color: #069706;
+    }
+    
+  
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <input type="text" id="taskInput" placeholder="Add a new task">
+        <button1 onclick="addTask()">Add Task</button1>
+        <ul id="taskList"></ul>
+    </div>
+    <script>document.addEventListener("DOMContentLoaded", function () {
+        loadTasks();
+    });
+    
+    function addTask() {
+        const taskInput = document.getElementById("taskInput");
+        const taskList = document.getElementById("taskList");
+    
+        if (taskInput.value !== "") {
+            const li = document.createElement("li");
+            li.innerHTML = `
+                <span>${taskInput.value}</span>
+                <button onclick="markAsDone(this)">Done</button>
+                <button2 onclick="deleteTask(this)">Delete</button2>
+            `;
+            taskList.appendChild(li);
+            saveTasks();
+            taskInput.value = "";
+        }
+    }
+    
+    function markAsDone(button) {
+        const taskItem = button.parentNode;
+        taskItem.classList.toggle("done");
+        saveTasks();
+    }
+    
+    function deleteTask(button1) {
+        const taskItem = button1.parentNode;
+        taskItem.remove();
+        saveTasks();
+    }
+    
+    function saveTasks() {
+        const taskList = document.getElementById("taskList");
+        localStorage.setItem("tasks", taskList.innerHTML);
+    }
+
+    function loadTasks() {
+        const taskList = document.getElementById("taskList");
+        taskList.innerHTML = localStorage.getItem("tasks") || "";
+    }
+    </script>
+</body>
+</html>
